@@ -1,4 +1,4 @@
-package elasticsearch
+package sharding
 
 import (
 	"github.com/rs/zerolog/log"

@@ -1,4 +1,4 @@
-package elasticsearch
+package configs
 
 import (
 	"github.com/rs/zerolog/log"

@@ -1,13 +1,13 @@
-package elasticsearch
+package sharding
 
 import (
-	"ElasticsearchHelper/elasticsearch/model"
+	model2 "ElasticsearchHelper/elasticsearch/sharding/model"
 	"fmt"
 	"github.com/rs/zerolog/log"
 )
 
-func parseHeaderLine(header string) []model.ShardHeaderPositioned {
-	var headers []model.ShardHeaderPositioned
+func parseHeaderLine(header string) []model2.ShardHeaderPositioned {
+	var headers []model2.ShardHeaderPositioned
 	var currentHeader *TempToken
 	for i, char := range header {
 		if currentHeader == nil {
@@ -19,8 +19,8 @@ func parseHeaderLine(header string) []model.ShardHeaderPositioned {
 			}
 		} else {
 			if char == ' ' {
-				endedHeader := model.ShardHeaderPositioned{
-					Header:        model.ShardHeader(currentHeader.Token),
+				endedHeader := model2.ShardHeaderPositioned{
+					Header:        model2.ShardHeader(currentHeader.Token),
 					FirstPosition: currentHeader.FirstPosition,
 					LastPosition:  i - 1,
 				}
@@ -33,8 +33,8 @@ func parseHeaderLine(header string) []model.ShardHeaderPositioned {
 	}
 
 	if currentHeader != nil {
-		endedHeader := model.ShardHeaderPositioned{
-			Header:        model.ShardHeader(currentHeader.Token),
+		endedHeader := model2.ShardHeaderPositioned{
+			Header:        model2.ShardHeader(currentHeader.Token),
 			FirstPosition: currentHeader.FirstPosition,
 			LastPosition:  len(header) - 1,
 		}
@@ -44,14 +44,14 @@ func parseHeaderLine(header string) []model.ShardHeaderPositioned {
 	return headers
 }
 
-func parseLine(line string, headers []model.ShardHeaderPositioned) (model.ElasticShard, error) {
-	var shard model.ElasticShard
+func parseLine(line string, headers []model2.ShardHeaderPositioned) (model2.ElasticShard, error) {
+	var shard model2.ElasticShard
 
 	consideringHeaderIndex := 0
 	consideringHeader := headers[consideringHeaderIndex]
 	var buildingToken *TempToken
 	lastSetValue := ""
-	var lastSetValueWasOnHeader model.ShardHeader
+	var lastSetValueWasOnHeader model2.ShardHeader
 	for i, char := range line {
 		if buildingToken == nil {
 			if char != ' ' {
@@ -133,23 +133,23 @@ func parseLine(line string, headers []model.ShardHeaderPositioned) (model.Elasti
 	return shard, nil
 }
 
-func setValueOnShard(shard *model.ElasticShard, header model.ShardHeader, value string) {
+func setValueOnShard(shard *model2.ElasticShard, header model2.ShardHeader, value string) {
 	switch header {
-	case model.Index:
+	case model2.Index:
 		shard.Index = value
-	case model.Shard:
+	case model2.Shard:
 		shard.Shard = value
-	case model.PriRep:
+	case model2.PriRep:
 		shard.PriRep = value
-	case model.State:
+	case model2.State:
 		shard.State = value
-	case model.Node:
+	case model2.Node:
 		shard.Node = value
-	case model.UnassignedReason:
+	case model2.UnassignedReason:
 		shard.UnassignedReason = value
-	case model.Docs:
+	case model2.Docs:
 		shard.Docs = value
-	case model.Store:
+	case model2.Store:
 		shard.Store = value
 	default:
 		log.Warn().Msgf("Unknown header: %v", header)
