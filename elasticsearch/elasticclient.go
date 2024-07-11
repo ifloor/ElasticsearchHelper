@@ -5,13 +5,13 @@ import (
 	"ElasticsearchHelper/elasticsearch/ilm"
 	"ElasticsearchHelper/elasticsearch/ilm/model"
 	"ElasticsearchHelper/elasticsearch/sharding"
-	model2 "ElasticsearchHelper/elasticsearch/sharding/model"
+	modelsharding "ElasticsearchHelper/elasticsearch/sharding/model"
 	"github.com/go-resty/resty/v2"
 )
 
 type ElasticClient struct {
-	client  *resty.Client
-	configs *configs2.ElasticConfigs
+	Client  *resty.Client
+	Configs *configs2.ElasticConfigs
 }
 
 func NewElasticClient() *ElasticClient {
@@ -19,15 +19,15 @@ func NewElasticClient() *ElasticClient {
 	client := resty.New()
 	client = client.SetBasicAuth(configs.AuthUsername, configs.AuthUserPassword)
 	return &ElasticClient{
-		client:  client,
-		configs: configs,
+		Client:  client,
+		Configs: configs,
 	}
 }
 
-func (ec *ElasticClient) FetchShards() ([]model2.ElasticShard, error) {
-	return sharding.FetchShards(ec.client, ec.configs)
+func (ec *ElasticClient) FetchShards() ([]modelsharding.ElasticShard, error) {
+	return sharding.FetchShards(ec.Client, ec.Configs)
 }
 
 func (ec *ElasticClient) FetchIlmInfo() (map[string]model.IlmIndex, error) {
-	return ilm.FetchIlmInfo(ec.client, ec.configs)
+	return ilm.FetchIlmInfo(ec.Client, ec.Configs)
 }
