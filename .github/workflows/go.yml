@@ -30,6 +30,9 @@ jobs:
     - name: Copy Dockerfile to prior building
       run: cp ./cicd/Dockerfile ./Dockerfile
 
+    - name: LS
+      run: ls ./dist
+
     - name: Read version file
       id: version
       run: echo "::set-output name=version::$(cat Version)"
