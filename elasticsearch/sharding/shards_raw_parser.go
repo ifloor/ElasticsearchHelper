@@ -2,6 +2,7 @@ package sharding
 
 import (
 	model2 "ElasticsearchHelper/elasticsearch/sharding/model"
+	"ElasticsearchHelper/utils"
 	"fmt"
 	"github.com/rs/zerolog/log"
 )
@@ -150,7 +151,7 @@ func setValueOnShard(shard *model2.ElasticShard, header model2.ShardHeader, valu
 	case model2.Docs:
 		shard.Docs = value
 	case model2.Store:
-		shard.Store = value
+		shard.Store = utils.StringBytesToIntBytes(value)
 	default:
 		log.Warn().Msgf("Unknown header: %v", header)
 	}
