@@ -52,7 +52,6 @@ func main() {
 		if condensedList, ok := mappedShards[ilm.IndexName]; ok {
 			for _, condensed := range condensedList {
 				condensed.Index = ilm
-				log.Warn().Msgf("Here")
 			}
 		} else {
 			log.Warn().Msgf("ILM Index %v does not have any shards found previously...", ilm.IndexName)
