@@ -6,6 +6,6 @@ import (
 )
 
 type ShardCondensedData struct {
-	Index ilmmodel.IlmIndex       `json:"index"`
+	Index *ilmmodel.IlmIndex      `json:"index"`
 	Shard shardmodel.ElasticShard `json:"shard"`
 }
