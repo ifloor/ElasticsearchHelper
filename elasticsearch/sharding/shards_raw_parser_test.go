@@ -17,7 +17,7 @@ type TestCase struct {
 	Node             string
 	UnassignedReason string
 	Docs             string
-	Store            string
+	Store            int64
 }
 
 var TestCases = []TestCase{
@@ -32,7 +32,7 @@ var TestCases = []TestCase{
 		Node:             "aragorn",
 		UnassignedReason: "",
 		Docs:             "0",
-		Store:            "225b",
+		Store:            225,
 	},
 	{
 		TestName: "Relocating",
@@ -45,7 +45,7 @@ var TestCases = []TestCase{
 		Node:             "gandalf -> 192.168.168.247 xC9WIDrVRNuiC2CVcu55Ig galadriel",
 		UnassignedReason: "",
 		Docs:             "42981806",
-		Store:            "5.5gb",
+		Store:            5905580032,
 	},
 }
 
