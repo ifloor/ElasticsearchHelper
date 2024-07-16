@@ -8,6 +8,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"github.com/vrischmann/envconfig"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -31,10 +32,12 @@ func main() {
 
 	// Prepare the data
 	// Work the shards
+	runId := time.Now().Format("2006-01-02 15:04:05.000")
 	mappedShards := make(map[string][]*shard_representation.ShardCondensedData)
 	for _, shard := range shards {
 		index := shard.Index
 		condensedData := shard_representation.ShardCondensedData{
+			RunId: runId,
 			Shard: shard,
 		}
 		var shardsForIndex []*shard_representation.ShardCondensedData
